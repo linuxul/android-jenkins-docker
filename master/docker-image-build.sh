@@ -1,0 +1,2 @@
+## `cut -c 13-` is `IMG_VERSION=` string length.
+docker build -t smparkworld/android-jenkins-master:$(cat VERSION | cut -c 13-) --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=`git rev-parse --short HEAD` --build-arg VERSION=`$(cat VERSION | cut -c 13-)` .

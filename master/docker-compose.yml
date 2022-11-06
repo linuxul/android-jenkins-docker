@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  android-jenkins-mastser:
+    container_name: android-jenkins-master
+    image: smparkworld/android-jenkins-master:1.0
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+#     - "{enter your host volume}:/var/jenkins_home"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      - TZ=Asia/Seoul
+    restart: always
