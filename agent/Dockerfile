@@ -1,6 +1,23 @@
-FROM jenkins/jenkins:2.361.2
+FROM eclipse-temurin:8u322-b06-jdk-focal AS jre-build
+
+FROM debian:bullseye-20220316
 
 LABEL maintainer = "park97.sm@gmail.com"
+
+ARG user=jenkins
+ARG group=jenkins
+ARG uid=1000
+ARG gid=1000
+ARG JENKINS_AGENT_HOME=/home/${user}
+
+ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
+
+RUN groupadd -g ${gid} ${group} \
+    && useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
+
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y openssh-server git-lfs\
+    && rm -rf /var/lib/apt/lists/*
 
 ## SDK Manager, Android SDK 설치 경로 및 버전 이름 설정
 ENV ANDROID_SDK_ZIP         commandlinetools-linux-7583922_latest.zip
@@ -17,10 +34,21 @@ ENV PATH $PATH:$ANDROID_SDK_ROOT/platform-tools
 ENV PATH $PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin
 ENV PATH $PATH:/opt/gradle-6.8/bin
 
-USER root
+## 필요한 패키지들 설치
+RUN dpkg --add-architecture i386
+RUN rm -rf /var/lib/apt/list/* && apt-get update && apt-get install ca-certificates curl gnupg2 software-properties-common git unzip file apt-utils lxc apt-transport-https libc6:i386 libncurses5:i386 libstdc++6:i386 zlib1g:i386 -y
+RUN apt-get update \
+  && apt-get -y install \
+    git-lfs \
+    fontconfig
+
 
 ## openJDK 11 설치
 RUN apt-get update && apt-get install openjdk-11-jdk -y
+
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH "${JAVA_HOME}/bin:${PATH}"
+COPY --from=jre-build /opt/java/openjdk $JAVA_HOME
 
 ## Gradle 설치
 ADD $GRADLE_ZIP_URL /opt/
@@ -75,8 +103,8 @@ WORKDIR "${JENKINS_AGENT_HOME}"
 ENV LANG C.UTF-8
 
 RUN echo "PATH=${PATH}" >> /etc/environment
-COPY ./ssh-setup/setup-sshd /usr/local/bin/setup-sshd
+COPY setup-sshd /usr/local/bin/setup-sshd
 
 EXPOSE 22
 
-ENTRYPOINT ["./ssh-setup/setup-sshd"]
+ENTRYPOINT ["setup-sshd"]
