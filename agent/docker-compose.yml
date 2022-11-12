@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  android-jenkins-agent:
+    container_name: android-jenkins-agent
+    image: smparkworld/android-jenkins-agent:1.0
+    ports:
+      - "223:22"
+    volumes:
+#      - {Enter your host volume}:/home/jenkins
+    restart: always
+    environment:
+      - TZ=Asia/Seoul
+#      - JENKINS_SLAVE_SSH_PUBKEY={Enter your host ssh public key}
