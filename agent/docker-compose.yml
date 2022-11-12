@@ -7,7 +7,7 @@ services:
     ports:
       - "223:22"
     volumes:
-#      - {Enter your host volume}:/home/jenkins
+#      - {Enter your host volume}:/var/jenkins
     restart: always
     environment:
       - TZ=Asia/Seoul
