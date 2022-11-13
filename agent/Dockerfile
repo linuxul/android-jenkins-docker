@@ -1,4 +1,4 @@
-FROM eclipse-temurin:8u322-b06-jdk-focal AS jre-build
+FROM eclipse-temurin:11.0.17_8-jdk AS jre-build
 
 FROM debian:bullseye-20220316
 
