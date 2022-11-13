@@ -4,8 +4,8 @@ Android CI를 위한 Jenkins DockerFile입니다.
 ## Specs
 - **Master:** `Jenkins v2.361.2` `OpenJDK 11` `Gradle v6.8` `Android SDK 27~31`
 - **Agent:** `eclipse-temurin:11.0.17_8-jdk` `debian:bullseye-20220316` `OpenJDK 11` `Gradle v6.8` `Android SDK 27~31`
+<br>
 
-<br><br>
 ## How to use
 1. Build the Dockerfile.
 ```
