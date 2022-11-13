@@ -1,6 +1,11 @@
 # android-jenkins-docker
 Android CI를 위한 Jenkins DockerFile입니다.
 <br><br>
+## Specs
+- **Master:** `Jenkins v2.361.2` `OpenJDK 11` `Gradle v6.8` `Android SDK 27~31`
+- **Agent:** `eclipse-temurin:11.0.17_8-jdk` `debian:bullseye-20220316` `OpenJDK 11` `Gradle v6.8` `Android SDK 27~31`
+
+<br><br>
 ## How to use
 1. Build the Dockerfile.
 ```
@@ -8,7 +13,7 @@ Android CI를 위한 Jenkins DockerFile입니다.
 ```
 <br>
 
-2. Edit docker-compose.yml file.
+2. Edit the docker-compose.yml file.
 > for Master
 ```
   $ sudo vi ./docker-compose.yml
