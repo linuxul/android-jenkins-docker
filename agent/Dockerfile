@@ -8,7 +8,7 @@ ARG user=jenkins
 ARG group=jenkins
 ARG uid=1000
 ARG gid=1000
-ARG JENKINS_AGENT_HOME=/home/${user}
+ARG JENKINS_AGENT_HOME=/var/${user}
 
 ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
 
