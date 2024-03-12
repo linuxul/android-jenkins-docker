@@ -19,13 +19,12 @@ ENV PATH $PATH:/opt/gradle-6.8/bin
 
 USER root
 
+RUN apt-get update && apt-get upgrade -y
+
+RUN apt-get install -y software-properties-common
+
 ## openJDK 11 설치
-# RUN apt-get update && apt-get install openjdk-8-jdk -y
-# RUN apt-get update && \
-#     apt-get install -y software-properties-common && \
-#     add-apt-repository "deb http://security.debian.org/debian-security stretch/updates main" && \
-#     apt-get update && \
-#     apt-get install -y openjdk-8-jdk
+RUN apt-get install -y openjdk-17-jdk
 
 ## Gradle 설치
 ADD $GRADLE_ZIP_URL /opt/
@@ -66,5 +65,5 @@ RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ## 기본 Jenkins Plugin 설치
-#USER jenkins
-#RUN jenkins-plugin-cli --plugins git gradle android-emulator ws-cleanup slack embeddable-build-status blueocean github-coverage-reporter jacoco github-pr-coverage-status locale role-strategy jdk-tool google-login warnings-ng github-pr-comment-build sonar basic-branch-build-strategies github-scm-trait-notification-context list-git-branches-parameter remote-file
+USER jenkins
+RUN jenkins-plugin-cli --plugins git gradle android-emulator ws-cleanup slack embeddable-build-status blueocean github-coverage-reporter jacoco github-pr-coverage-status locale role-strategy jdk-tool google-login warnings-ng github-pr-comment-build sonar basic-branch-build-strategies github-scm-trait-notification-context list-git-branches-parameter remote-file
