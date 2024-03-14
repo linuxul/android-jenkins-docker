@@ -45,3 +45,27 @@ RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
 RUN apt-get install -y android-tools-adb
 
 USER jenkins
+
+RUN jenkins-plugin-cli --plugins \
+    git \
+    gradle \
+    android-emulator \
+    ws-cleanup \
+    slack \
+    embeddable-build-status \
+    blueocean \
+    github-coverage-reporter \
+    jacoco \
+    github-pr-coverage-status \
+    locale \
+    role-strategy \
+    jdk-tool \
+    google-login \
+    warnings-ng \
+    github-pr-comment-build \
+    sonar \
+    basic-branch-build-strategies \
+    github-scm-trait-notification-context \
+    list-git-branches-parameter \
+    remote-file \
+    gitlab-plugin
